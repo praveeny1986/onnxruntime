@@ -1259,6 +1259,11 @@ def run_training_python_frontend_e2e_tests(cwd):
         run_subprocess([
             'mpirun', '-n', str(ngpus), '-x', 'NCCL_DEBUG=INFO', sys.executable, 'orttraining_run_glue.py'], cwd=cwd)
 
+        # checkpoint tests
+        # TODO: these are running on nightly multi gpu run for now. Will be moved to on pull request verify job
+        # once single gpu/cpu multi worker trainer run works
+        run_subprocess([sys.executable, 'orttraining_test_checkpoint.py'], cwd=cwd)
+
     # with orttraining_run_glue.py.
     # 1. we like to force to use single GPU (with CUDA_VISIBLE_DEVICES)
     #   for fine-tune tests.
